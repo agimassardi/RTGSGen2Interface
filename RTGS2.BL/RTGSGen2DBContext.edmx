@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RTGS2.BL.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="OutgoingSingleCredit">
+          <Key>
+            <PropertyRef Name="TRN" />
+          </Key>
+          <Property Name="TRN" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Date" Type="nvarchar" MaxLength="6" />
+          <Property Name="Amount" Type="nvarchar" MaxLength="100" />
+          <Property Name="OrderingCustomerAccount" Type="nvarchar" MaxLength="100" />
+          <Property Name="OrderingCustomerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="OrderingInstitutionAccount" Type="nvarchar" MaxLength="100" />
+          <Property Name="OrderingInstitutionBank" Type="nvarchar" MaxLength="100" />
+          <Property Name="SenderCorrespondentAccount" Type="nvarchar" MaxLength="100" />
+          <Property Name="SenderCorrespondentBank" Type="nvarchar" MaxLength="100" />
+          <Property Name="BeneficiaryInstitutionAccount" Type="nvarchar" MaxLength="100" />
+          <Property Name="BeneficiaryInstitutionBank" Type="nvarchar" MaxLength="100" />
+          <Property Name="BeneficiaryCustomerAccount" Type="nvarchar" MaxLength="100" />
+          <Property Name="BeneficiaryCustomerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Details" Type="nvarchar" MaxLength="100" />
+          <Property Name="Inputter" Type="nvarchar" MaxLength="100" />
+          <Property Name="CompanyCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <Function Name="GenerateOutgoingSingleCredit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TRN" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetAllOutgoingSingleCredit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ProcessOutgoingSingleCredit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TRN" Type="varchar" Mode="In" />
+          <Parameter Name="Date" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="RTGS2BLStoreContainer">
+          <EntitySet Name="OutgoingSingleCredit" EntityType="Self.OutgoingSingleCredit" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RTGS2.BL" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RTGSGen2DBContext" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="ProcessOutgoingSingleCredit" EntitySet="OutgoingSingleCredit" ReturnType="Collection(RTGS2.BL.OutgoingSingleCredit)">
+            <Parameter Name="TRN" Mode="In" Type="String" />
+            <Parameter Name="Date" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GenerateOutgoingSingleCredit">
+          <Parameter Name="TRN" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="OutgoingSingleCredit" EntityType="RTGS2.BL.OutgoingSingleCredit" />
+          <FunctionImport Name="GetAllOutgoingSingleCredit" EntitySet="OutgoingSingleCredit" ReturnType="Collection(RTGS2.BL.OutgoingSingleCredit)" />
+        </EntityContainer>
+        <ComplexType Name="GetOutgoingSingleCredit_Result">
+          <Property Type="String" Name="TRN" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DateCurrencyAmount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OrderingCustomerAccount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OrderingCustomerName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OrderingInstitutionAccount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OrderingInstitutionBank" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SenderCorrespondentAccount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SenderCorrespondentBank" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BeneficiaryInstitutionAccount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BeneficiaryInstitutionBank" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BeneficiaryCustomerAccount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BeneficiaryCustomerName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Details" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Inputter" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <EnumType Name="TransactionStatus" UnderlyingType="SByte">
+          <Member Name="Unprocessed" />
+          <Member Name="Processed" />
+          <Member Name="Generated" />
+        </EnumType>
+        <EntityType Name="OutgoingSingleCredit">
+          <Key>
+            <PropertyRef Name="TRN" />
+          </Key>
+          <Property Name="TRN" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Date" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderingCustomerAccount" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderingCustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderingInstitutionAccount" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderingInstitutionBank" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SenderCorrespondentAccount" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SenderCorrespondentBank" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BeneficiaryInstitutionAccount" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BeneficiaryInstitutionBank" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BeneficiaryCustomerAccount" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BeneficiaryCustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Details" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Inputter" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="GetAllOutgoingSingleCredit_Result">
+          <Property Type="String" Name="TRN" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Sequence" Nullable="true" />
+          <Property Type="String" Name="Date" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="Amount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OrderingCustomerAccount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OrderingCustomerName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OrderingInstitutionAccount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OrderingInstitutionBank" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SenderCorrespondentAccount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SenderCorrespondentBank" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BeneficiaryInstitutionAccount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BeneficiaryInstitutionBank" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BeneficiaryCustomerAccount" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BeneficiaryCustomerName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Details" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Inputter" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="20" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RTGS2BLStoreContainer" CdmEntityContainer="RTGSGen2DBContext">
+          <FunctionImportMapping FunctionImportName="ProcessOutgoingSingleCredit" FunctionName="RTGS2.BL.Store.ProcessOutgoingSingleCredit" />
+          <FunctionImportMapping FunctionImportName="GenerateOutgoingSingleCredit" FunctionName="RTGS2.BL.Store.GenerateOutgoingSingleCredit" />
+          <EntitySetMapping Name="OutgoingSingleCredit">
+            <EntityTypeMapping TypeName="RTGS2.BL.OutgoingSingleCredit">
+              <MappingFragment StoreEntitySet="OutgoingSingleCredit">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="Inputter" ColumnName="Inputter" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="BeneficiaryCustomerName" ColumnName="BeneficiaryCustomerName" />
+                <ScalarProperty Name="BeneficiaryCustomerAccount" ColumnName="BeneficiaryCustomerAccount" />
+                <ScalarProperty Name="BeneficiaryInstitutionBank" ColumnName="BeneficiaryInstitutionBank" />
+                <ScalarProperty Name="BeneficiaryInstitutionAccount" ColumnName="BeneficiaryInstitutionAccount" />
+                <ScalarProperty Name="SenderCorrespondentBank" ColumnName="SenderCorrespondentBank" />
+                <ScalarProperty Name="SenderCorrespondentAccount" ColumnName="SenderCorrespondentAccount" />
+                <ScalarProperty Name="OrderingInstitutionBank" ColumnName="OrderingInstitutionBank" />
+                <ScalarProperty Name="OrderingInstitutionAccount" ColumnName="OrderingInstitutionAccount" />
+                <ScalarProperty Name="OrderingCustomerName" ColumnName="OrderingCustomerName" />
+                <ScalarProperty Name="OrderingCustomerAccount" ColumnName="OrderingCustomerAccount" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="TRN" ColumnName="TRN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAllOutgoingSingleCredit" FunctionName="RTGS2.BL.Store.GetAllOutgoingSingleCredit">
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
