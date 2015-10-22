@@ -30,7 +30,7 @@ namespace RTGS2.Interface
             }
             catch (Exception ex)
             {
-                log.Write(ex.Message);
+                log.Write("ProcessAllTransactions => " + ex.Message);
             }
 
             return false;
